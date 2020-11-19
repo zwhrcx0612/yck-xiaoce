@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        // 对于对象来说，其实都是通过 new 产生的，无论是 function Foo() 还是 let a = { b : 1 } 。
+        function Person(name) {
+            this.name = name
+        }
+
+        var p = new Person('zhangsan')
+
+        // 创建一个空对象
+        // 获取构造函数
+        // 设置空对象的原型
+        // 绑定 this 并执行构造函数
+        // 确保返回值为对象
+        function create() {
+            // var obj = {}
+            const constructor = Array.prototype.shift.call(arguments)
+            // obj.__proto__ = constructor.prototype
+            var obj = Object.create(constructor.prototype)
+            // Object.setPrototypeOf(obj, constructor.prototype);
+            let result = constructor.apply(obj, arguments)
+            // 构造函数如果返回原始值,例如返回number，那么这个返回值毫无意义
+            // 构造函数如果返回值为对象，那么这个返回值会被正常使用
+            return result instanceof Object ? result : obj
+        }
+
+        var p1 = create(Person, 'zhangsan')
+    </script>
+</body>
+
+</html>
