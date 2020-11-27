@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        {{name}}
+
+    </div>
+    <script>
+        let Depp
+        class Dep{
+            constructor(){
+                this.list = []
+            }
+            add(val){
+                this.list.push(val)
+            }
+            notify(){
+                this.list.forEach(depp => {
+                    depp.fn()
+                })
+            }
+        }
+
+        class Watcher{
+            constructor(obj,key,fn){
+                Depp = this
+                this.obj = obj
+                this.key = key
+                this.fn =fn
+                // 触发get方法，添加依赖
+                this.value = obj[key]
+                // Depp = null
+            }
+        }
+        var data = {name:'zhangsan'}
+        observe(data)
+        // value
+        function update(){
+            document.getElementsByTagName('div')[0].innerText = this.value
+        }
+        // 针对某个属性监听
+        new Watcher(data,'name',update)
+
+        data.name = 'lisi'
+        function observe(data){
+            if(!data || typeof data !=='object'){
+                return 
+            }
+            for(let key in data){
+                // 注意这里的val
+                let val = data[key]
+                observe(val)
+                let dp = new Dep()
+                Object.defineProperty(data,key, {
+                    configurable:true,
+                    enumerable:true,
+                    set(name){
+                        // 触发依赖
+                        Depp.value = name
+                        dp.notify(Depp)
+                        val = name
+                    },
+                    get(){
+                        dp.add(Depp)
+                        return  val
+                    }
+                })
+                
+            }
+        }
+
+        
+
+
+
+    </script>
+</body>
+
+</html>

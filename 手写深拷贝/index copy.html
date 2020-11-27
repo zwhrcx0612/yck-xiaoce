@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        /**
+         * 判断是否是对象
+         * 判断是对象还是数组，对象和数组的处理方式不同
+         * 复制一份obj为newObj，浅拷贝
+         * 遍历newObj的key，判断旧对象obj的每一项是否是对象，是的话递归，不是的话赋值
+         */
+        function deepClone(obj) {
+            function isObject(o) {
+                return (typeof o === 'object' || typeof o === 'function') && o !== null
+            }
+
+            if (!isObject(obj)) {
+                throw new Error('不是对象')
+            }
+
+            const isArray = Array.isArray(obj)
+            const newObj = isArray ? [...obj] : { ...obj }
+            Reflect.ownKeys(newObj).forEach(key => {
+                newObj[key] = isObject(obj[key]) ? deepClone(obj[key]) : obj[key]
+            })
+
+            return newObj
+        }
+
+
+        // let obj = [1, 2, 3, 4]
+        let obj = {
+            a: [1, 2, 3],
+            b: {
+                c: 2,
+                d: 3
+            }
+        }
+        let newObj = deepClone(obj)
+        newObj.b.c = 1
+        console.log(obj.b.c) // 2
+    </script>
+</body>
+
+</html>
