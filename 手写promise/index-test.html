@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const PENDING = 'pending'
+        const RESOLVED = 'resolved'
+        const REJECTED = 'rejected'
+
+        function MyPromise(fn){
+            this.state = PENDING;
+            this.value = null
+            this.resolveCallBack = []
+            this.rejectCallBack = []
+
+            function resolve(v){
+                this.state = RESOLVED
+                this.value = v
+                this.resolveCallBack.forEach(fn => {
+
+                })
+            }
+
+            function reject(){
+
+            }
+        }
+
+        MyPromise.prototype.then = function(onfulled,onrejected){
+            typeof onfulled !== 'function'
+            this.resolveCallBack.push(onfulled)
+        }
+
+        let p = new MyPromise((resolve, reject) => {
+            resolve(1)
+        })
+        p.then(r => {
+            console.log(r)
+        })
+    </script>
+</body>
+
+</html>

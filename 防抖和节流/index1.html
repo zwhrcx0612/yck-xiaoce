@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 节流 -->
+    <div>
+        <input type="text" value="测试">
+    </div>
+    <script>
+        document.getElementsByTagName('input')[0].addEventListener('input',throttle(handle))
+        function handle(){
+            console.log('触发了')
+        }
+        // 节流没有clearTimeout
+        function throttle(fn){
+            let time 
+            let run = true
+            return function(){
+                if(!run){
+                    return
+                }
+                run = false
+                // 事件结束再触发
+                time = setTimeout(() => {
+                    fn()
+                    run = true
+                },1000)
+            }
+        }
+    </script>
+</body>
+</html>
