@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 防抖 -->
+    <div>
+        <input type="button" value="测试">
+    </div>
+    <script>
+        document.getElementsByTagName('input')[0].addEventListener('click',debounce(handle))
+        function handle(){
+            console.log('触发了')
+        }
+        function debounce(fn){
+            let time 
+            return function(){
+                clearTimeout(time)
+                // 事件结束再触发
+                time = setTimeout(() => {
+                    fn()
+                },2000)
+            }
+        }
+    </script>
+</body>
+</html>
