@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        // 定义三种状态
+        const PENDING = 'pending'
+        const RESOLVED = 'resolved'
+        const REJECTED = 'rejected'
+
+
+        function MyPromise(fn) {
+            // 保存this防止异步调用
+            // 设置初始状态为pending
+            // 设置value
+            // 设置存储回调的数据
+            const that = this
+            that.state = PENDING
+            that.value = null
+            that.resoledCallBack = []
+            that.rejectedCallBack = []
+
+            function resolve(v) {
+                setTimeout(() => {
+                    if (that.state === PENDING) {
+                        that.state = RESOLVED
+                        that.value = v
+                        that.resoledCallBack.map(cb => {
+                            cb(v)
+                        })
+                    }
+                }, 0)
+            }
+
+            function reject(v) {
+                setTimeout(() => {
+                    if (that.state === REJECTED) {
+                        that.state = REJECTED
+                        that.value = v
+                        that.rejectedCallBack.map(cb => {
+                            cb(v)
+                        })
+                    }
+                }, 0)
+            }
+
+            fn(resolve, reject)
+        }
+
+        MyPromise.prototype.then = function (onFulFilled, onRejected) {
+            const that = this
+            // 保证参数是函数
+            onFulFilled = typeof onFulFilled === 'function' ? onFulFilled : r => r
+            onRejected = typeof onRejected === 'function' ? onRejected : r => { throw new Error(r) }
+            // 若是pending
+            if (that.state === PENDING) {
+                // 添加回调函数
+                that.resoledCallBack.push(onFulFilled)
+                that.rejectedCallBack.push(onRejected)
+            }
+            // 若是resolved
+            if (that.state === RESOLVED) {
+                // 执行回调
+                onFulFilled(that.value)
+            }
+            // 若是rejected
+            if (that.state === REJECTED) {
+                // 执行回调
+                onRejected(that.value)
+            }
+        }
+
+        let p = new MyPromise((resolve, reject) => {
+            // setTimeout(() => {
+            resolve(1)
+            // })
+        })
+
+        p.then(r => {
+            console.log(r)
+        })
+        console.log(2)
+    </script>
+</body>
+
+</html>

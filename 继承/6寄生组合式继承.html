@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        // 仅调用一次父类型的函数
+        function SuperType(){
+
+        }
+
+        function SubType(){
+
+        }
+
+        SubType.prototype = Object.create(SuperType.prototype,{
+            constructor: {
+                configurable:true,
+                enumerable:false,
+                value:SubType,
+                writable:true
+            }
+        })
+
+        let s = new SubType()
+    </script>
+</body>
+
+</html>

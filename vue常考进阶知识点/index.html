@@ -9,10 +9,12 @@
 
 <body>
     <div>
-        {{name}}
-
+        <span>{{name}}</span>
+        <!-- <input type="text"> -->
+        <input type="text" name="" id="">
     </div>
     <script>
+        
         // Dep.target可以 是temp.taget，任意的对象都可以，class Dep无关
         class Watcher {
             constructor(obj, key, cb) {
@@ -54,7 +56,7 @@
         var data = { name: 'yck' }
         observe(data)
         function update(value) {
-            document.querySelector('div').innerText = value
+            document.querySelector('div > span').innerText = value
         }
         // 模拟解析到 `{{name}}` 触发的操作
         // 添加监听
@@ -94,8 +96,10 @@
                 }
             })
         }
-
-
+        var input = document.getElementsByTagName('input')[0]
+        input.addEventListener('keyup',function(e){
+            data.name = e.target.value
+        })
 
 
     </script>

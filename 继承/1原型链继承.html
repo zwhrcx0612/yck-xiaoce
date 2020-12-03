@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 子类的constructor指向错误
+        // 创建多个子类时，引用的是同一个colors
+        function SuperType() {
+            this.colors = ['red', 'blue', 'green']
+        }
+
+        function SubType() {
+
+        }
+
+        SubType.prototype = new SuperType();
+        var instance1 = new SubType();
+        instance1.colors.push("black");
+        alert(instance1.colors); //"red,blue,green,black" 
+        var instance2 = new SubType();
+        alert(instance2.colors); //"red,blue,green,black"
+
+    </script>
+</body>
+
+</html>

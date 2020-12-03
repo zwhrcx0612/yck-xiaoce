@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        function deepClone(obj) {
+            // 判断是否是对象类型
+            // 判断是否是数组
+            // 创建一个变量，使其等于解构后obj
+            // 遍历新变量的所有key，给新变量的每个属性赋值，若是原始类型，则直接赋值，否则的话递归
+            function isObject(o) {
+                return (typeof o === 'object' || typeof o === 'function') && o !== null
+            }
+
+            if (!isObject(obj)) {
+                throw new Error('非对象')
+            }
+
+
+            const isArray = Array.isArray(obj)
+
+            const newObj = isArray ? [...obj] : { ...obj }
+            Object.keys(newObj).forEach(key => {
+                newObj[key] = isObject(obj[key]) ? deepClone(obj[key]) : obj[key]
+            })
+
+            return newObj
+        }
+
+        let obj = {
+            age: [1, 2, 3]
+        }
+
+        let newObj = deepClone(obj)
+        obj.age.pop()
+        console.log(newObj)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" name="" id="">
+    <span></span>
+    <script>
+        // 数据的变化导致视图的变化
+        // 
+        var input = document.getElementsByTagName('input')[0]
+        var span = document.getElementsByTagName('span')[0]
+
+        var data = {
+            text:'zhangsan'
+        }
+
+        Object.defineProperty(data,'text',{
+            set(val){
+                // input.value = val
+                console.log(input.value)
+                span.innerText = val
+                return val
+            }
+        })
+
+        input.addEventListener('input',function(e){
+            data.text = e.target.value
+            // 触发set方法
+        })
+    </script>
+</body>
+</html>

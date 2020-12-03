@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        //  借助已有的对象创建新对象，不必创建构造函数
+        var person = {
+            name: 'Nicholas',
+            friends: ['shelby', 'court', 'van']
+        }
+        // 创建一个空对象，原型为person
+        var newPerson = Object.create(person)
+        newPerson.name = 'newPerson'
+        newPerson.friends.push('rob')
+        console.log(newPerson)
+        var newPerson1 = Object.create(person)
+        newPerson1.name = 'newPerson1'
+        newPerson1.friends.push('barbie')
+        console.log(newPerson1)
+        // name: "newPerson1"
+        //  __proto__:
+        //      friends: (5) ["shelby", "court", "van", "rob", "barbie"]
+        //      name: "Nicholas"
+        console.log(person)
+    </script>
+</body>
+
+</html>
