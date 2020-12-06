@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="div1">div1</div>
+    <script>
+        window.id = 'window'
+
+        document.querySelector('#div1').onclick = function(){
+            'use strict'
+            let that = this
+            console.log(this.id)
+            function callback() {
+                console.log(this.id)
+            }
+            callback()
+        }
+    </script>
+</body>
+
+</html>
